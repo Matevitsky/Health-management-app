@@ -5,8 +5,8 @@ import java.time.LocalDateTime;
 /**
  *
  */
-public class UserMeal {
-    private Integer id;
+public class UserMeal extends BaseEntity {
+
 
     private final LocalDateTime dateTime;
 
@@ -19,15 +19,13 @@ public class UserMeal {
     }
 
     public UserMeal(Integer id, LocalDateTime dateTime, String description, int calories) {
-        this.id = id;
+        super(id);
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -41,13 +39,9 @@ public class UserMeal {
         return calories;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public boolean isNew() {
-        return id == null;
-    }
+
+
 
     @Override
     public String toString() {
