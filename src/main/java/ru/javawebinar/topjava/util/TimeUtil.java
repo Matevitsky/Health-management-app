@@ -11,6 +11,10 @@ import java.time.format.DateTimeFormatter;
  *
  */
 public class TimeUtil {
+
+    private TimeUtil(){
+
+    }
     public static final DateTimeFormatter DATE_TME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static final LocalDate MIN_DATE = LocalDate.of(1, 1, 1);
