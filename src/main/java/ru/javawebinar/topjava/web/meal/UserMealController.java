@@ -14,7 +14,6 @@ import java.time.LocalTime;
 import java.util.Objects;
 
 
-
 @Controller
 @RequestMapping(value = "/meals")
 public class UserMealController extends AbstractUserMealController {

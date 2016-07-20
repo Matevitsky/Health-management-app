@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.transaction.annotation.Transactional;
+import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.repository.UserMealRepository;
 
@@ -17,12 +19,12 @@ import java.util.List;
 /**
  * Created by Sergey on 01.07.16.
  */
-
-
+@Transactional(readOnly = true)
 public abstract class AbstractJdbcUserMealRepositoryImpl<T> implements UserMealRepository {
 
-    private SimpleJdbcInsert insertUserMeal;
+    private static final RowMapper<Role> ROLE_ROW_MAPPER = (rs, rowNum) -> Role.valueOf(rs.getString("role"));
 
+    private SimpleJdbcInsert insertUserMeal;
     private final RowMapper<UserMeal> rowMapper;
 
     @Autowired
@@ -41,6 +43,7 @@ public abstract class AbstractJdbcUserMealRepositoryImpl<T> implements UserMealR
     protected abstract T toDbValue(LocalDateTime ldt);
 
     @Override
+    @Transactional
     public UserMeal save(UserMeal userMeal, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", userMeal.getId())
@@ -65,6 +68,7 @@ public abstract class AbstractJdbcUserMealRepositoryImpl<T> implements UserMealR
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
         return jdbcTemplate.update("DELETE FROM meals WHERE id=? AND user_id=?", id, userId) != 0;
     }
