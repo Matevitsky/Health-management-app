@@ -12,9 +12,10 @@ import java.time.format.DateTimeFormatter;
  */
 public class TimeUtil {
 
-    private TimeUtil(){
+    private TimeUtil() {
 
     }
+
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public static final LocalDate MIN_DATE = LocalDate.of(1, 1, 1);
@@ -30,6 +31,14 @@ public class TimeUtil {
 
     public static LocalTime parseLocalTime(String str) {
         return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
+    }
+
+    public static LocalDateTime parseLocalDateTime(String str) {
+        return parseLocalDateTime(str, DATE_TIME_FORMATTER);
+    }
+
+    public static LocalDateTime parseLocalDateTime(String str, DateTimeFormatter formatter) {
+        return StringUtils.isEmpty(str) ? LocalDateTime.now() : LocalDateTime.parse(str, formatter);
     }
 
     public static String toString(LocalDateTime ldt) {
