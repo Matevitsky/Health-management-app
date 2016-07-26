@@ -14,10 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-/**
- * GKislin
- * 06.03.2015.
- */
+
+
 public abstract class AbstractUserMealController {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractUserMealController.class);
 
@@ -59,7 +57,7 @@ public abstract class AbstractUserMealController {
     public List<UserMealWithExceed> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime) {
         int userId = AuthorizedUser.id();
         LOG.info("getBetween dates {} - {} for time {} - {} for User {}", startDate, endDate, startTime, endTime, userId);
-        return UserMealsUtil.getFilteredMealsWithExceeded(
+        return UserMealsUtil.getFilteredWithExceeded(
                 service.getBetweenDates(
                         startDate != null ? startDate : TimeUtil.MIN_DATE, endDate != null ? endDate : TimeUtil.MAX_DATE, userId
                 ), startTime != null ? startTime : LocalTime.MIN, endTime != null ? endTime : LocalTime.MAX, AuthorizedUser.getCaloriesPerDay()

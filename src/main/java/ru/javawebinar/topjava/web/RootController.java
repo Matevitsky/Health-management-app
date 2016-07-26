@@ -18,13 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RootController {
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private UserMealService mealService;
-
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root() {
@@ -33,10 +31,8 @@ public class RootController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String userList(Model model) {
-
         model.addAttribute("userList", userService.getAll());
         return "userList";
-
     }
 
     @RequestMapping(value = "/meals", method = RequestMethod.GET)
@@ -46,12 +42,10 @@ public class RootController {
         return "mealList";
     }
 
-
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public String setUser(HttpServletRequest request) {
         int userId = Integer.valueOf(request.getParameter("userId"));
         AuthorizedUser.setId(userId);
         return "redirect:meals";
     }
-
 }
