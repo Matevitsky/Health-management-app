@@ -106,16 +106,14 @@
 <script type="text/javascript">
     var ajaxUrl = 'ajax/admin/users/';
     var datatableApi;
-
     function updateTable() {
         $.get(ajaxUrl, updateTableByData);
     }
-
     // $(document).ready(function () {
     $(function () {
-        datatableApi = $('#datatable').dataTable({
+        datatableApi = $('#datatable').DataTable({
             "paging": false,
-            "info": false,
+            "info": true,
             "columns": [
                 {
                     "data": "name"
@@ -149,13 +147,11 @@
             ]
         });
         makeEditable();
-    });
-
-    makeEditable();
-    $(':checkbox').each(function () {
-        if (!$(this).is(":checked")) {
-            $(this).closest('tr').css("text-decoration", "line-through");
-        }
+        $(':checkbox').each(function () {
+            if (!$(this).is(":checked")) {
+                $(this).closest('tr').css("text-decoration", "line-through");
+            }
+        });
     });
 </script>
 </html>
