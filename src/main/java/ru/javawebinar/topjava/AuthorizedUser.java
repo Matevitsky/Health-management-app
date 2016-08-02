@@ -23,6 +23,6 @@ public class AuthorizedUser {
     }
 
     public static int getCaloriesPerDay() {
-        return UserMealsUtil.DEFAULT_CALORIES_PER_DAY;
+        return UserUtil.DEFAULT_CALORIES_PER_DAY;
     }
 }
