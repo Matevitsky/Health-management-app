@@ -1,6 +1,7 @@
 package ru.javawebinar.topjava.util;
 
 import org.springframework.util.StringUtils;
+import ru.javawebinar.topjava.model.BaseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 /**
  *
  */
-public class TimeUtil {
+public class TimeUtil  {
 
     private TimeUtil() {
 
