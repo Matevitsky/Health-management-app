@@ -1,5 +1,6 @@
 package ru.javawebinar.topjava.util;
 
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.UserMeal;
 import ru.javawebinar.topjava.to.UserMealTo;
 import ru.javawebinar.topjava.to.UserMealWithExceed;
@@ -74,7 +75,7 @@ public class UserMealsUtil {
         userMeal.setCalories(userMealTo.getCalories());
         userMeal.setDateTime(userMealTo.getDateTime());
         userMeal.setDescription(userMealTo.getDescription());
-        userMeal.setId(userMealTo.getId());
+        userMeal.setId(AuthorizedUser.id());
 
         return userMeal;
     }
