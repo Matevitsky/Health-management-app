@@ -15,7 +15,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     private static final long serialVersionUID = 1L;
 
-    private final UserTo userTo;
+    private UserTo userTo;
 
 
     public AuthorizedUser(User user) {
@@ -51,6 +51,10 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
 
     public UserTo getUserTo() {
         return userTo;
+    }
+
+    public void update(UserTo newTo) {
+        userTo = newTo;
     }
 
     @Override

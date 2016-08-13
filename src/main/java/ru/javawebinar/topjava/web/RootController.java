@@ -3,21 +3,47 @@ package ru.javawebinar.topjava.web;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
+import ru.javawebinar.topjava.AuthorizedUser;
+import ru.javawebinar.topjava.to.UserTo;
+import ru.javawebinar.topjava.util.UserUtil;
+import ru.javawebinar.topjava.web.user.AbstractUserController;
+
+import javax.validation.Valid;
 
 /**
  * Created by Sergey on 16.07.16.
  */
 
 @Controller
-public class RootController {
+public class RootController extends AbstractUserController {
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String root() {
         return "redirect:meals";
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public String profile() {
+        return "profile";
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public String updateProfile(@Valid UserTo userTo, BindingResult result, SessionStatus status) {
+        if (result.hasErrors()) {
+            return "profile";
+        } else {
+            userTo.setId(AuthorizedUser.id());
+            super.update(userTo);
+            AuthorizedUser.get().update(userTo);
+            status.setComplete();
+            return "redirect:meals";
+        }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -31,12 +57,31 @@ public class RootController {
         return "mealList";
     }
 
-   @RequestMapping(value = "/login",method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model,
-                        @RequestParam(value = "error",required = false) boolean error,
-                        @RequestParam(value = "message",required = false) String message){
-       model.put("error",error);
-       model.put("message", message);
-       return "login";
-   }
+                        @RequestParam(value = "error", required = false) boolean error,
+                        @RequestParam(value = "message", required = false) String message) {
+        model.put("error", error);
+        model.put("message", message);
+        return "login";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String register(ModelMap model) {
+        model.addAttribute("userTo", new UserTo());
+        model.addAttribute("register", true);
+        return "profile";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String saveRegister(@Valid UserTo userTo, BindingResult result, SessionStatus status, ModelMap model) {
+        if (result.hasErrors()) {
+            model.addAttribute("register", true);
+            return "profile";
+        } else {
+            super.create(UserUtil.createNewFromTo(userTo));
+            status.setComplete();
+            return "redirect:login?message=app.registered";
+        }
+    }
 }
