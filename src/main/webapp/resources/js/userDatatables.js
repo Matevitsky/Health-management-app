@@ -45,7 +45,7 @@ $(function () {
                 "render": function (date, type, row) {
                     if (type == 'display') {
                         var dateObject = new Date(date);
-                        return '<span>' + dateObject.toISOString().substring(0, 10) + '</span>';
+                        return '<span>' + date.substring(0, 10) + '</span>';
                     }
                     return date;
                 }
